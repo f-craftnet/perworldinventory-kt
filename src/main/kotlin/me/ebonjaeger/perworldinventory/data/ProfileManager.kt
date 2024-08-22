@@ -25,11 +25,11 @@ class ProfileManager @Inject constructor(private val bukkitService: BukkitServic
 {
 
     private val profileCache: Cache<ProfileKey, PlayerProfile> = CacheBuilder.newBuilder()
-            .expireAfterAccess(settings.getProperty(PluginSettings.CACHE_DURATION).toLong(), TimeUnit.MINUTES)
-            .maximumSize(settings.getProperty(PluginSettings.CACHE_MAX_LIMIT).toLong())
+            .expireAfterAccess(settings.getProperty(PluginSettings.CACHE_DURATION!!).toLong(), TimeUnit.MINUTES)
+            .maximumSize(settings.getProperty(PluginSettings.CACHE_MAX_LIMIT!!).toLong())
             .build()
 
-    private val separateGameModes = settings.getProperty(PluginSettings.SEPARATE_GM_INVENTORIES)
+    private val separateGameModes = settings.getProperty(PluginSettings.SEPARATE_GM_INVENTORIES!!)
 
     /**
      * Save a player in the database. Their profile will be cached for a period of time in order to save on disk I/O,
@@ -135,13 +135,13 @@ class ProfileManager @Inject constructor(private val bukkitService: BukkitServic
 
     private fun transferInventories(player: Player, profile: PlayerProfile)
     {
-        if (settings.getProperty(PlayerSettings.LOAD_INVENTORY))
+        if (settings.getProperty(PlayerSettings.LOAD_INVENTORY!!))
         {
             player.inventory.clear()
             player.inventory.contents = profile.inventory
             player.inventory.setArmorContents(profile.armor)
         }
-        if (settings.getProperty(PlayerSettings.LOAD_ENDER_CHEST))
+        if (settings.getProperty(PlayerSettings.LOAD_ENDER_CHEST!!))
         {
             player.enderChest.clear()
             player.enderChest.contents = profile.enderChest
@@ -150,7 +150,7 @@ class ProfileManager @Inject constructor(private val bukkitService: BukkitServic
 
     private fun transferHealth(player: Player, profile: PlayerProfile)
     {
-        if (!settings.getProperty(PlayerSettings.LOAD_HEALTH)) {
+        if (!settings.getProperty(PlayerSettings.LOAD_HEALTH!!)) {
             return
         }
 
@@ -165,7 +165,7 @@ class ProfileManager @Inject constructor(private val bukkitService: BukkitServic
 
     private fun transferPotionEffects(player: Player, profile: PlayerProfile)
     {
-        if (settings.getProperty(PlayerSettings.LOAD_POTION_EFFECTS))
+        if (settings.getProperty(PlayerSettings.LOAD_POTION_EFFECTS!!))
         {
             player.activePotionEffects.forEach { player.removePotionEffect(it.type) }
             player.addPotionEffects(profile.potionEffects)
@@ -182,7 +182,7 @@ class ProfileManager @Inject constructor(private val bukkitService: BukkitServic
      * Therefore, set their allow flight to true before setting their fly mode.
      */
     private fun transferFlying(player: Player, profile: PlayerProfile) {
-        if (settings.getProperty(PlayerSettings.LOAD_FLYING)) {
+        if (settings.getProperty(PlayerSettings.LOAD_FLYING!!)) {
 
             if (profile.isFlying && !player.allowFlight) {
                 player.allowFlight = true
@@ -200,56 +200,56 @@ class ProfileManager @Inject constructor(private val bukkitService: BukkitServic
     private fun applyDefaults(player: Player)
     {
         // Time for a massive line of if-statements . . .
-        if (settings.getProperty(PlayerSettings.LOAD_INVENTORY))
+        if (settings.getProperty(PlayerSettings.LOAD_INVENTORY!!))
         {
             player.inventory.clear()
         }
-        if (settings.getProperty(PlayerSettings.LOAD_ENDER_CHEST))
+        if (settings.getProperty(PlayerSettings.LOAD_ENDER_CHEST!!))
         {
             player.enderChest.clear()
         }
-        if (settings.getProperty(PlayerSettings.LOAD_EXHAUSTION))
+        if (settings.getProperty(PlayerSettings.LOAD_EXHAUSTION!!))
         {
             player.exhaustion = PlayerDefaults.EXHAUSTION
         }
-        if (settings.getProperty(PlayerSettings.LOAD_EXP))
+        if (settings.getProperty(PlayerSettings.LOAD_EXP!!))
         {
             player.exp = PlayerDefaults.EXPERIENCE
         }
-        if (settings.getProperty(PlayerSettings.LOAD_HUNGER))
+        if (settings.getProperty(PlayerSettings.LOAD_HUNGER!!))
         {
             player.foodLevel = PlayerDefaults.FOOD_LEVEL
         }
-        if (settings.getProperty(PlayerSettings.LOAD_HEALTH))
+        if (settings.getProperty(PlayerSettings.LOAD_HEALTH!!))
         {
             player.getAttribute(Attribute.GENERIC_MAX_HEALTH)!!.baseValue = PlayerDefaults.HEALTH // Players have max health, this wont be null
             player.health = PlayerDefaults.HEALTH
         }
-        if (settings.getProperty(PlayerSettings.LOAD_LEVEL))
+        if (settings.getProperty(PlayerSettings.LOAD_LEVEL!!))
         {
             player.level = PlayerDefaults.LEVEL
         }
-        if (settings.getProperty(PlayerSettings.LOAD_SATURATION))
+        if (settings.getProperty(PlayerSettings.LOAD_SATURATION!!))
         {
             player.saturation = PlayerDefaults.SATURATION
         }
-        if (settings.getProperty(PlayerSettings.LOAD_FALL_DISTANCE))
+        if (settings.getProperty(PlayerSettings.LOAD_FALL_DISTANCE!!))
         {
             player.fallDistance = PlayerDefaults.FALL_DISTANCE
         }
-        if (settings.getProperty(PlayerSettings.LOAD_FIRE_TICKS))
+        if (settings.getProperty(PlayerSettings.LOAD_FIRE_TICKS!!))
         {
             player.fireTicks = PlayerDefaults.FIRE_TICKS
         }
-        if (settings.getProperty(PlayerSettings.LOAD_MAX_AIR))
+        if (settings.getProperty(PlayerSettings.LOAD_MAX_AIR!!))
         {
             player.maximumAir = PlayerDefaults.MAXIMUM_AIR
         }
-        if (settings.getProperty(PlayerSettings.LOAD_REMAINING_AIR))
+        if (settings.getProperty(PlayerSettings.LOAD_REMAINING_AIR!!))
         {
             player.remainingAir = PlayerDefaults.REMAINING_AIR
         }
-        if (settings.getProperty(PlayerSettings.LOAD_POTION_EFFECTS))
+        if (settings.getProperty(PlayerSettings.LOAD_POTION_EFFECTS!!))
         {
             player.activePotionEffects.forEach { player.removePotionEffect(it.type) }
         }

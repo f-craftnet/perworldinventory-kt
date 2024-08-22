@@ -21,7 +21,7 @@ class PlayerGameModeChangeListener @Inject constructor(private val groupManager:
 
     @EventHandler(priority = EventPriority.MONITOR)
     fun onPlayerChangedGameMode(event: PlayerGameModeChangeEvent) {
-        if (event.isCancelled || !settings.getProperty(PluginSettings.SEPARATE_GM_INVENTORIES)) {
+        if (event.isCancelled || !settings.getProperty(PluginSettings.SEPARATE_GM_INVENTORIES!!)) {
             return
         }
 
@@ -35,7 +35,7 @@ class PlayerGameModeChangeListener @Inject constructor(private val groupManager:
         profileManager.addPlayerProfile(player, group, player.gameMode)
 
         // Check if the player can bypass the inventory switch
-        if (!settings.getProperty(PluginSettings.DISABLE_BYPASS) &&
+        if (!settings.getProperty(PluginSettings.DISABLE_BYPASS!!) &&
                 player.hasPermission(PlayerPermission.BYPASS_GAMEMODE.getNode())) {
             ConsoleLogger.debug("onPlayerChangedGameMode: '${player.name}' is bypassing the inventory switch")
             return

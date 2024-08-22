@@ -81,7 +81,7 @@ class EconomyService @Inject constructor(private val server: Server,
 
     @PostConstruct
     fun tryLoadEconomy() {
-        if (settings.getProperty(PlayerSettings.USE_ECONOMY) && server.pluginManager.getPlugin("Vault") != null) {
+        if (settings.getProperty(PlayerSettings.USE_ECONOMY!!) && server.pluginManager.getPlugin("Vault") != null) {
             ConsoleLogger.info("Vault found! Hooking into it...")
 
             val rsp = server.servicesManager.getRegistration(Economy::class.java)

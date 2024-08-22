@@ -18,7 +18,7 @@ class PlayerQuitListener @Inject constructor(private val plugin: PerWorldInvento
     @EventHandler(priority = EventPriority.MONITOR)
     fun onPlayerQuit(event: PlayerQuitEvent) {
         plugin.timeouts.remove(event.player.uniqueId)
-        if (settings.getProperty(PluginSettings.LOAD_DATA_ON_JOIN)) {
+        if (settings.getProperty(PluginSettings.LOAD_DATA_ON_JOIN!!)) {
             dataSource.saveLogout(event.player)
         }
     }
@@ -26,7 +26,7 @@ class PlayerQuitListener @Inject constructor(private val plugin: PerWorldInvento
     @EventHandler(priority = EventPriority.MONITOR)
     fun onPlayerKick(event: PlayerKickEvent) {
         plugin.timeouts.remove(event.player.uniqueId)
-        if (settings.getProperty(PluginSettings.LOAD_DATA_ON_JOIN)) {
+        if (settings.getProperty(PluginSettings.LOAD_DATA_ON_JOIN!!)) {
             dataSource.saveLogout(event.player)
         }
     }

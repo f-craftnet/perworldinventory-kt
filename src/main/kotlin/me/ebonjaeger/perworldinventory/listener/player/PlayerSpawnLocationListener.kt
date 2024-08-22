@@ -21,7 +21,7 @@ class PlayerSpawnLocationListener @Inject constructor(private val dataSource: Da
     @EventHandler(priority = EventPriority.MONITOR)
     fun onPlayerSpawn(event: PlayerSpawnLocationEvent)
     {
-        if (!settings.getProperty(PluginSettings.LOAD_DATA_ON_JOIN))
+        if (!settings.getProperty(PluginSettings.LOAD_DATA_ON_JOIN!!))
             return
 
         val player = event.player

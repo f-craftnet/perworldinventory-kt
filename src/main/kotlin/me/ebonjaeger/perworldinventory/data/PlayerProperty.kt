@@ -47,7 +47,7 @@ enum class PlayerProperty(private val property: Property<Boolean>?,
 
 
     fun applyFromProfileToPlayerIfConfigured(profile: PlayerProfile, player: Player, settings: Settings) {
-        if (settings.getProperty(property)) {
+        if (settings.getProperty(property!!)) {
             accessors.applyFromProfileToPlayer(profile, player)
         }
     }

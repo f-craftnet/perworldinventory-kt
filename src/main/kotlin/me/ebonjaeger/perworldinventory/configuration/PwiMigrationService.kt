@@ -21,18 +21,18 @@ class PwiMigrationService : PlainMigrationService()
      * @param configurationData The configuration data
      * @return True if the configuration has changed, false otherwise
      */
-    private fun migrateDebugLevels(reader: PropertyReader, configurationData: ConfigurationData) : Boolean
-    {
+    private fun migrateDebugLevels(reader: PropertyReader, configurationData: ConfigurationData): Boolean {
         val oldPath = "debug-mode"
         val newSetting = PluginSettings.LOGGING_LEVEL
 
-        if (!newSetting!!.isPresent(reader) && reader.contains(oldPath))
-        {
-            val oldValue = reader.getBoolean(oldPath) ?: return false
-            val level = if (oldValue) LogLevel.FINE else LogLevel.INFO
+        if (newSetting != null) {
+            if (!reader.contains(newSetting.path) && reader.contains(oldPath)) {
+                val oldValue = reader.getBoolean(oldPath) ?: return false
+                val level = if (oldValue) LogLevel.FINE else LogLevel.INFO
 
-            configurationData.setValue(newSetting, level)
-            return MigrationService.MIGRATION_REQUIRED
+                configurationData.setValue(newSetting, level)
+                return MigrationService.MIGRATION_REQUIRED
+            }
         }
 
         return MigrationService.NO_MIGRATION_NEEDED

@@ -35,7 +35,7 @@ class PerWorldInventoryAPI @Inject constructor(private val plugin: PerWorldInven
 
         return if (!firstGroup.configured || !secondGroup.configured)
         {
-            firstGroup.containsWorld(second) || settings.getProperty(PluginSettings.SHARE_IF_UNCONFIGURED)
+            firstGroup.containsWorld(second) || settings.getProperty(PluginSettings.SHARE_IF_UNCONFIGURED!!)
         } else
         {
             firstGroup.containsWorld(second)

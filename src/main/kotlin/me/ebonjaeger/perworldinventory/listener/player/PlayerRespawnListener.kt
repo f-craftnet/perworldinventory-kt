@@ -21,7 +21,7 @@ class PlayerRespawnListener @Inject constructor(private val groupManager: GroupM
     @EventHandler(priority = EventPriority.LOW)
     fun onPlayerRespawn(event: PlayerRespawnEvent) {
         // Do nothing if managing respawns is disabled in the config
-        if (!settings.getProperty(PluginSettings.MANAGE_DEATH_RESPAWN)) {
+        if (!settings.getProperty(PluginSettings.MANAGE_DEATH_RESPAWN!!)) {
             return
         }
 

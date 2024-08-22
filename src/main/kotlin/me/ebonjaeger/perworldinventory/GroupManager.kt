@@ -79,7 +79,7 @@ class GroupManager @Inject constructor(@PluginFolder pluginFolder: File,
         group = Group(world, worlds, GameMode.SURVIVAL, null)
 
         addGroup(world, worlds, GameMode.SURVIVAL, false)
-        if (!settings.getProperty(PluginSettings.DISABLE_NAG))
+        if (!settings.getProperty(PluginSettings.DISABLE_NAG!!))
         {
             ConsoleLogger.warning("Creating a new group on the fly for '$world'." +
                     " Please double check your `worlds.yml` file configuration!")

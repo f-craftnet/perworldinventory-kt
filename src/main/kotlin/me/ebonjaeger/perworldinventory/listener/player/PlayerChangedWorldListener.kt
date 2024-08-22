@@ -35,7 +35,7 @@ class PlayerChangedWorldListener @Inject constructor(private val plugin: PerWorl
         ConsoleLogger.fine("onPlayerChangedWorld: ${player.name} changed worlds")
 
         // Check if the FROM group is configured
-        if (!groupFrom.configured && settings.getProperty(PluginSettings.SHARE_IF_UNCONFIGURED))
+        if (!groupFrom.configured && settings.getProperty(PluginSettings.SHARE_IF_UNCONFIGURED!!))
         {
             ConsoleLogger.debug("onPlayerChangedWorld: FROM group (${groupFrom.name}) is not defined, and plugin configured to share inventory")
 
@@ -50,7 +50,7 @@ class PlayerChangedWorldListener @Inject constructor(private val plugin: PerWorl
         }
 
         // Check of the TO group is configured
-        if (!groupTo.configured && settings.getProperty(PluginSettings.SHARE_IF_UNCONFIGURED))
+        if (!groupTo.configured && settings.getProperty(PluginSettings.SHARE_IF_UNCONFIGURED!!))
         {
             ConsoleLogger.debug("onPlayerChangedWorld: FROM group (${groupTo.name}) is not defined, and plugin configured to share inventory")
 
@@ -58,7 +58,7 @@ class PlayerChangedWorldListener @Inject constructor(private val plugin: PerWorl
         }
 
         // Check if the player bypasses the changes
-        if (!settings.getProperty(PluginSettings.DISABLE_BYPASS) &&
+        if (!settings.getProperty(PluginSettings.DISABLE_BYPASS!!) &&
                 player.hasPermission(PlayerPermission.BYPASS_WORLDS.getNode()))
         {
             ConsoleLogger.debug("onPlayerChangedWorld: Player '${player.name}' has bypass worlds permission")
@@ -67,7 +67,7 @@ class PlayerChangedWorldListener @Inject constructor(private val plugin: PerWorl
 
         // Check if we manage GameModes. If we do, we can skip loading the data
         // for a mode they're only going to be in for half a second.
-        if (settings.getProperty(PluginSettings.MANAGE_GAMEMODES) &&
+        if (settings.getProperty(PluginSettings.MANAGE_GAMEMODES!!) &&
                 !player.hasPermission(PlayerPermission.BYPASS_ENFORCE_GAMEMODE.getNode()))
         {
             if (player.gameMode != groupTo.defaultGameMode)
@@ -81,7 +81,7 @@ class PlayerChangedWorldListener @Inject constructor(private val plugin: PerWorl
                 // aren't separated, the other listener will return early. Thus it should
                 // be perfectly safe to load the data from here.
 
-                if (settings.getProperty(PluginSettings.SEPARATE_GM_INVENTORIES))
+                if (settings.getProperty(PluginSettings.SEPARATE_GM_INVENTORIES!!))
                 {
                     ConsoleLogger.debug("onPlayerChangedWorld: GameMode inventories are separated, so returning from here")
                     return

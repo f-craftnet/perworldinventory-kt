@@ -16,6 +16,7 @@ import me.ebonjaeger.perworldinventory.initialization.PluginFolder
 import me.ebonjaeger.perworldinventory.listener.entity.EntityPortalEventListener
 import me.ebonjaeger.perworldinventory.listener.player.*
 import org.bstats.bukkit.Metrics
+import org.bstats.charts.SimplePie
 import org.bukkit.Bukkit
 import org.bukkit.Server
 import org.bukkit.configuration.serialization.ConfigurationSerialization
@@ -83,7 +84,7 @@ class PerWorldInventory : JavaPlugin
         val settings = Settings.create(File(dataFolder, "config.yml"))
         injector.register(Settings::class, settings)
 
-        ConsoleLogger.setLogLevel(settings.getProperty(PluginSettings.LOGGING_LEVEL))
+        ConsoleLogger.setLogLevel(settings.getProperty(PluginSettings.LOGGING_LEVEL!!))
 
         // Inject and register all the things
         setupGroupManager(injector)
@@ -93,7 +94,7 @@ class PerWorldInventory : JavaPlugin
         // Start bStats metrics
         if (settings.getProperty(MetricsSettings.ENABLE_METRICS))
         {
-            startMetrics(settings, injector.getSingleton(GroupManager::class))
+            //startMetrics(settings, injector.getSingleton(GroupManager::class))
         }
 
         // Start task to prevent item duping across worlds
@@ -172,37 +173,33 @@ class PerWorldInventory : JavaPlugin
      *
      * @param settings The settings for sending group and world information
      */
-    private fun startMetrics(settings: Settings, groupManager: GroupManager)
-    {
+    /*
+    private fun startMetrics(settings: Settings, groupManager: GroupManager) {
         val bStats = Metrics(this)
 
-        if (settings.getProperty(MetricsSettings.SEND_NUM_GROUPS))
-        {
+        if (settings.getProperty(MetricsSettings.SEND_NUM_GROUPS!!)) {
             // Get the total number of configured Groups
-            bStats.addCustomChart(Metrics.SimplePie("num_groups") {
+            bStats.addCustomChart(SimplePie("num_groups") {
                 val numGroups = groupManager.groups.size
-
-                return@SimplePie numGroups.toString()
+                numGroups.toString()
             })
         }
 
-        if (settings.getProperty(MetricsSettings.SEND_NUM_WORLDS))
-        {
+        if (settings.getProperty(MetricsSettings.SEND_NUM_WORLDS!!)) {
             // Get the total number of worlds (configured or not)
-            bStats.addCustomChart(Metrics.SimplePie("num_worlds") {
+            bStats.addCustomChart(SimplePie("num_worlds") {
                 val numWorlds = Bukkit.getWorlds().size
 
-                when
-                {
-                    numWorlds <= 5 -> return@SimplePie "1-5"
-                    numWorlds <= 10 -> return@SimplePie "6-10"
-                    numWorlds <= 15 -> return@SimplePie "11-15"
-                    numWorlds <= 20 -> return@SimplePie "16-20"
-                    numWorlds <= 25 -> return@SimplePie "21-25"
-                    numWorlds <= 30 -> return@SimplePie "26-30"
-                    else -> return@SimplePie numWorlds.toString()
+                when {
+                    numWorlds <= 5 -> "1-5"
+                    numWorlds <= 10 -> "6-10"
+                    numWorlds <= 15 -> "11-15"
+                    numWorlds <= 20 -> "16-20"
+                    numWorlds <= 25 -> "21-25"
+                    numWorlds <= 30 -> "26-30"
+                    else -> numWorlds.toString()
                 }
             })
         }
-    }
+    }*/
 }
