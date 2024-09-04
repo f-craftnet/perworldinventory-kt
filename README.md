@@ -51,5 +51,3 @@ Please note that not all pull requests will be accepted, and I may require
 changes before they are accepted!
 
 Readme file made by @Jaryn-R, edited and updated by EbonJaeger
-
-## Github Action
