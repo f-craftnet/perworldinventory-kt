@@ -12,7 +12,7 @@ Kotlin programming language.
 [![Dependency Status](https://www.versioneye.com/user/projects/5aea27cb0fb24f5450e028a7/badge.svg?style=flat-square)](https://www.versioneye.com/user/projects/5aea27cb0fb24f5450e028a7)
 [![codecov](https://codecov.io/gh/EbonJaeger/perworldinventory-kt/branch/master/graph/badge.svg)](https://codecov.io/gh/EbonJaeger/perworldinventory-kt)
 ## Building Prerequisites
-* JDK 8
+* JDK 21
 * Maven
 
 ## Building
@@ -26,6 +26,12 @@ If you want to build PerWorldInventory yourself, you will need Maven.
 That is all!
 
 This should give you a copy of PerWorldInventory.jar under the target/ directory.
+
+### Building with docker
+
+If you don't want to setup your own machine this can be build with a simple docker one liner
+
+`docker run -it --rm --name my-maven-project -v .:/usr/src/mymaven -w /usr/src/mymaven maven:3.9.9-eclipse-temurin-21 mvn clean install`
 
 ## License
 
