@@ -18,5 +18,13 @@ jobs:
           java-version: '21'
           distribution: 'temurin'
           architecture: x64
+      - name: Restore Maven cache
+        uses: skjolber/maven-cache-github-action@v1
+        with:
+          step: restore
       - name: Build With Maven
         run: mvn clean install
+      - name: Save Maven cache
+        uses: skjolber/maven-cache-github-action@v1
+        with:
+          step: save
