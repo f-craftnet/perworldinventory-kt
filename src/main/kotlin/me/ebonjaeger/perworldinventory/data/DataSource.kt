@@ -2,6 +2,7 @@ package me.ebonjaeger.perworldinventory.data
 
 import com.google.gson.JsonObject
 import org.bukkit.Location
+import org.bukkit.OfflinePlayer
 import org.bukkit.entity.Player
 
 interface DataSource
@@ -22,6 +23,7 @@ interface DataSource
      * @param player The player who logged out
      */
     fun saveLogout(player: Player)
+    fun saveLogout(player: OfflinePlayer, location: Location)
 
     /**
      * Save the location of a player when they teleport to a different world.
@@ -29,7 +31,7 @@ interface DataSource
      * @param player The player that teleported
      * @param location The location of the player on teleport
      */
-    fun saveLocation(player: Player, location: Location)
+    fun saveLocation(player: OfflinePlayer, location: Location)
 
     /**
      * Retrieves a player's data from the database.
@@ -39,6 +41,13 @@ interface DataSource
      * @return A [JsonObject] with all of the player's information
      */
     fun getPlayer(key: ProfileKey, player: Player): PlayerProfile?
+    fun getPlayer(
+        key: ProfileKey,
+        player: OfflinePlayer,
+        name: String,
+        inventorySize: Int,
+        enderSize: Int
+    ): PlayerProfile?
 
     /**
      * Get the name of the world that a player logged out in.
@@ -48,7 +57,7 @@ interface DataSource
      * @param player The player to get the last logout for
      * @return The location of the player when they last logged out
      */
-    fun getLogout(player: Player): Location?
+    fun getLogout(player: OfflinePlayer): Location?
 
     /**
      * Get a player's last location in a world. If a player has never been to
@@ -58,5 +67,5 @@ interface DataSource
      * @param world The name of the world the player is going to
      * @return The last location in the world where the player was standing
      */
-    fun getLocation(player: Player, world: String): Location?
+    fun getLocation(player: OfflinePlayer, world: String): Location?
 }

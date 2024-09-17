@@ -29,6 +29,34 @@ metrics:
   # Send the total number of worlds on the server.
   send-number-of-worlds: true
 
+
+# MYSQL DB STRUCTURE
+#CREATE TABLE `player_inventories` (
+#   `id` int(11) NOT NULL AUTO_INCREMENT,
+#   `playerUUID` varchar(36) NOT NULL,
+#   `type` varchar(32) NOT NULL,
+#   `group` varchar(32) DEFAULT NULL,
+#   `data` MEDIUMTEXT NOT NULL,
+#   `time` datetime DEFAULT CURRENT_TIMESTAMP,
+#	PRIMARY KEY (`id`)
+#);
+#ALTER TABLE `player_inventories` ADD INDEX `playerUUID_idx` (`playerUUID`)
+#ALTER TABLE `player_inventories` ADD INDEX `group_idx` (`group`)
+#ALTER TABLE `player_inventories` ADD INDEX `type_idx` (`type`)
+
+mysql:
+  ## Choose whether to use mysql as the backend
+  enabled: False
+  ## MySQL DB Details
+  hostname: 'localhost'
+  database: 'minecraft'
+  username: ''
+  password: ''
+  port: 3306
+  table: 'player_inventories'
+  ## How many past saves of inventory to keep for each user per group per game mode
+  rows-to-keep: 10
+
 # All settings for players are here:
 player:
   # Save and Load players' economy balances. Requires Vault!

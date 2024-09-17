@@ -27,7 +27,9 @@ class Settings private constructor(resource: YamlFileResource,
         private val PROPERTY_HOLDERS = arrayOf(
                 PluginSettings::class.java,
                 MetricsSettings::class.java,
-                PlayerSettings::class.java)
+            PlayerSettings::class.java,
+            MySQLSettings::class.java
+        )
 
         /**
          * Creates a [Settings] instance, using the given file as config file.

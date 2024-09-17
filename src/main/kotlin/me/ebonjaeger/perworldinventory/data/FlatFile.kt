@@ -10,6 +10,7 @@ import net.minidev.json.JSONStyle
 import net.minidev.json.parser.JSONParser
 import org.bukkit.GameMode
 import org.bukkit.Location
+import org.bukkit.OfflinePlayer
 import org.bukkit.entity.Player
 import java.io.File
 import java.io.FileReader
@@ -55,13 +56,17 @@ class FlatFile @Inject constructor(@DataDirectory private val dataDirectory: Fil
 
     override fun saveLogout(player: Player)
     {
+        saveLogout(player, player.location)
+    }
+
+    override fun saveLogout(player: OfflinePlayer, location: Location) {
         val dir = File(dataDirectory, player.uniqueId.toString())
         val file = File(dir, "last-logout.json")
 
         try
         {
             createFileIfNotExists(file)
-            val data = LocationSerializer.serialize(player.location)
+            val data = LocationSerializer.serialize(location)
             FileWriter(file).use { it.write(data.toJSONString(JSONStyle.LT_COMPRESS)) }
         } catch (ex: IOException)
         {
@@ -72,7 +77,7 @@ class FlatFile @Inject constructor(@DataDirectory private val dataDirectory: Fil
         }
     }
 
-    override fun saveLocation(player: Player, location: Location)
+    override fun saveLocation(player: OfflinePlayer, location: Location)
     {
         val dir = File(dataDirectory, player.uniqueId.toString())
         val file = File(dir, "last-locations.json")
@@ -117,6 +122,16 @@ class FlatFile @Inject constructor(@DataDirectory private val dataDirectory: Fil
 
     override fun getPlayer(key: ProfileKey, player: Player): PlayerProfile?
     {
+        return getPlayer(key, player, player.name, player.inventory.size, player.enderChest.size)
+    }
+
+    override fun getPlayer(
+        key: ProfileKey,
+        player: OfflinePlayer,
+        name: String,
+        inventorySize: Int,
+        enderSize: Int
+    ): PlayerProfile? {
         val file = getFile(key)
 
         // If the file does not exist, the player hasn't been to this group before
@@ -132,12 +147,12 @@ class FlatFile @Inject constructor(@DataDirectory private val dataDirectory: Fil
             return if (data.containsKey("==")) { // Data is from ConfigurationSerialization
                 SerializationHelper.deserialize(data) as PlayerProfile
             } else { // Old data format and methods
-                PlayerSerializer.deserialize(data, player.name, player.inventory.size, player.enderChest.size)
+                PlayerSerializer.deserialize(data, name, inventorySize, enderSize)
             }
         }
     }
 
-    override fun getLogout(player: Player): Location?
+    override fun getLogout(player: OfflinePlayer): Location?
     {
         val dir = File(dataDirectory, player.uniqueId.toString())
         val file = File(dir, "last-logout.json")
@@ -156,7 +171,7 @@ class FlatFile @Inject constructor(@DataDirectory private val dataDirectory: Fil
         }
     }
 
-    override fun getLocation(player: Player, world: String): Location?
+    override fun getLocation(player: OfflinePlayer, world: String): Location?
     {
         val dir = File(dataDirectory, player.uniqueId.toString())
         val file = File(dir, "last-locations.json")

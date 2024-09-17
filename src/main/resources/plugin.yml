@@ -24,6 +24,7 @@ permissions:
       perworldinventory.command.groups.modify: true
       perworldinventory.command.groups.remove: true
       perworldinventory.command.migrate: true
+      perworldinventory.command.transfer: true
   perworldinventory.bypass.*:
     default: false
     children:

@@ -15,8 +15,6 @@ import me.ebonjaeger.perworldinventory.initialization.InjectorBuilder
 import me.ebonjaeger.perworldinventory.initialization.PluginFolder
 import me.ebonjaeger.perworldinventory.listener.entity.EntityPortalEventListener
 import me.ebonjaeger.perworldinventory.listener.player.*
-import org.bstats.bukkit.Metrics
-import org.bstats.charts.SimplePie
 import org.bukkit.Bukkit
 import org.bukkit.Server
 import org.bukkit.configuration.serialization.ConfigurationSerialization
@@ -164,6 +162,7 @@ class PerWorldInventory : JavaPlugin
         commandManager.registerCommand(injector.getSingleton(ConvertCommand::class))
         commandManager.registerCommand(injector.getSingleton(GroupCommands::class))
         commandManager.registerCommand(injector.getSingleton(MigrateCommand::class))
+        commandManager.registerCommand(injector.getSingleton(TransferCommand::class))
     }
 
     /**
